@@ -7,6 +7,7 @@ window.PersonalityTester = function () {
         name: '',
         sex: ''
     }
+    let res = null
 
     const personalityTypes = [
         // 0
@@ -121,22 +122,26 @@ window.PersonalityTester = function () {
             answerList[questionIndex] = option
         },
         getTestingResult() {
+            if (res) {
+                return res
+            }
             if (answerList[5] === optionTypes.A) {
                 // 橘猫或文心湖 风雨操场
                 let r = triRandom()
-                return personalityTypes[r > 0 ? 0 : r < 0 ? 6 : 9]
+                res = personalityTypes[r > 0 ? 0 : r < 0 ? 6 : 9]
             } else if (answerList[4] === optionTypes.A) {
                 // 号院或者白猫 校友门
                 let r = triRandom()
-                return personalityTypes[r > 0 ? 1 : r < 0 ? 8 : 11]
+                res = personalityTypes[r > 0 ? 1 : r < 0 ? 8 : 11]
             } else if (answerList[5] === optionTypes.D) {
                 // 小树林、情人坡、海棠花、麻辣香锅
-                return personalityTypes[binRandom() ? (binRandom() ? 3 : 4) : (binRandom() ? 10 : 12)]
+                res = personalityTypes[binRandom() ? (binRandom() ? 3 : 4) : (binRandom() ? 10 : 12)]
             } else {
                 // 知新楼、鸡蛋饼、风的界面
                 let r = triRandom()
-                return personalityTypes[r > 0 ? 2 : r < 0 ? 5 : 7]
+                res = personalityTypes[r > 0 ? 2 : r < 0 ? 5 : 7]
             }
+            return res
         },
         showResult() {
             let res = this.getTestingResult()

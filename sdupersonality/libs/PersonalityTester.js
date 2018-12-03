@@ -1,13 +1,12 @@
 window.PersonalityTester = function () {
 
-    let getImageUrl = name => `personalities/${name}.jpg`
+    let getImageUrl = name => `personalities/${name}.png`
     let getNameImageUrl = name => `personality_names/${name}.png`
 
     let userInfo = {
         name: '',
         sex: ''
     }
-    let res = null
 
     const personalityTypes = [
         // 0
@@ -107,6 +106,9 @@ window.PersonalityTester = function () {
         let r = Math.random()
         return r >= 2 / 3 ? 1 : r >= 1 / 3 ? 0 : -1
     }
+    
+    // 记录最后测试结果
+    let res = null
 
     return {
 
@@ -191,45 +193,6 @@ window.PersonalityTester = function () {
             left: 10%;
             top: 50%;
         }
-        /*.testing-result .personality-wrapper{*/
-            /*text-align: center;*/
-            /*position: absolute;*/
-            /*box-sizing: border-box;*/
-            /*width: 13em;*/
-            /*left: 10%;*/
-            /*top: 50%;*/
-            /*background-color: #fce92b;*/
-            /*border-radius: 5px;*/
-            /*border: 5px dotted #00598e;*/
-            /*padding: 0 1em;*/
-            /*font-size: 1.5em;*/
-            /*letter-spacing: .2em;*/
-        
-        /*}*/
-        /*.testing-result .personality-wrapper .row-1{*/
-            /*margin: 0;*/
-        /*}*/
-        /*.testing-result .personality-wrapper .row-2{*/
-            /*font-size: 2em;*/
-            /*white-space: nowrap;*/
-            /*margin: .5em 0 0 0;*/
-            /*animation: row-2 2s infinite ;*/
-        /*}*/
-        /*@keyframes row-2 {*/
-            /*0%{*/
-                /*transform: translateY(0);*/
-            /*}*/
-            /*4%{*/
-                /*transform: translateY(-10px);*/
-            /*}*/
-            /*8%{*/
-                /*transform: translateY(0);*/
-            /*}*/
-            /*100%{*/
-                /*transform: translateY(0);*/
-            /*}*/
-        /*}*/
-
         .testing-result .enter-button{
             position: absolute;
             bottom: 1em;
@@ -271,8 +234,8 @@ window.PersonalityTester = function () {
 
                 cc.fillStyle = '#fff'
                 cc.font = "bolder 25px NSimSun"
-                cc.fillText(userInfo.name, 180, 57);
-
+                cc.textAlign = 'right'
+                cc.fillText(userInfo.name, 240, 57);
                 let posterUrl = canvas.toDataURL('image/jpeg')
 
                 let content = `
@@ -287,7 +250,8 @@ window.PersonalityTester = function () {
             height: 100%;
             text-align: center;
             color: white;
-            background-color: rgba(50,50,50,.5);
+            background-image: url("${getImageUrl('poster_bg')}");
+            background-size: cover;
         }
         .personal-poster__img{
             margin-top: 1em;

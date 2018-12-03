@@ -33,10 +33,11 @@
             top: 0;
             background: #bbdadc url("./private_images/bg.jpg");
             background-size: cover;
+            background-position: right right;
         }
         .user-info__form {
             position: absolute;
-            top: 50%;
+            height: 275px;
             width: 100%;
             left: 0;
             bottom: 10%;
@@ -138,7 +139,7 @@
             background-color: #918859;
         }
         .inner-bar {
-            width: 50%;
+            width: 0%;
             height: 100%;
             background-color: #fff09d;
             border-radius: 5px;
@@ -169,7 +170,7 @@
   }
 </style>
 <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
-<script src="index.js?1543490306805"></script>
+<script src="index.js?1543824585946"></script>
 <script type='text/javascript' src='libs/polyfill.js'></script>
 <script type='text/javascript' src='libs/PersonalityTester.js'></script>
 <script type='text/javascript' src='libs/util.js'></script>
@@ -209,7 +210,6 @@ function handleComplete(evt,comp) {
 	}
 	exportRoot = new lib.无标题1();
 	stage = new lib.Stage(canvas);
-	stage.enableMouseOver();
     //Registers the "tick" event listener.
     fnStartAnimation = function() {
 		stage.addChild(exportRoot);
@@ -316,8 +316,13 @@ function handleComplete(evt,comp) {
         </div>
     </form>
     <script>
-        // 绑定表单各种事件
+        let submitButton = document.getElementById('user-info__submit')
+        let progressBar = document.querySelector('.progress-bar')
+        let innerBar = document.querySelector('.inner-bar')
         let sexOptions = Array.from(document.querySelectorAll('.sex-row .sex-option'))
+        let formDom = document.getElementById('user-info__form'),
+            nameDom = document.getElementById('user-info__name')
+        // 绑定表单各种事件
         sexOptions.forEach(function (sexOption) {
             sexOption.addEventListener('click', function () {
                 sexOptions.forEach(function (so) {
@@ -330,12 +335,14 @@ function handleComplete(evt,comp) {
                 })
             })
         })
+        // 动画加载时改变进度条
+        Bus.on('animationloadprogress',p=>{
+            innerBar.style.width = p*100 + '%'
+        })
         // 动画加载完毕后 绑定提交按钮事件
         Bus.on('animationloadcomplete', () => {
             // 此时按照流程逻辑应该已经有个AnimationPlay对象
             function submitUserInfo() {
-                let formDom = document.getElementById('user-info__form'),
-                    nameDom = document.getElementById('user-info__name')
                 let validityPass = formDom.reportValidity()
                 if (validityPass) {
                     PersonalityTester.updateUserInfo(nameDom.value,
@@ -345,9 +352,6 @@ function handleComplete(evt,comp) {
                 }
                 return validityPass
             }
-            let submitButton = document.getElementById('user-info__submit')
-            let progressBar = document.querySelector('.progress-bar')
-            let innerBar = document.querySelector('.inner-bar')
             // 绑定点击事件
             submitButton.addEventListener('click', (e) => {
                 e.preventDefault()

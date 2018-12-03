@@ -40,7 +40,7 @@ function waitAnswer(questionIndex, adobeSymbolsInfo = [
 
     this.stop();
     adobeSymbolsInfo.forEach(symbol => {
-
+        
         this[symbol.name].addEventListener("click", mouseClickHandler.bind(this));
 
         function mouseClickHandler() {
